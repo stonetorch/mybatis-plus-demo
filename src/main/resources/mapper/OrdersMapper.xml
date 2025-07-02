@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisplusdemo.mapper.OrdersMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.mybatisplusdemo.model.domain.Orders">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+
+    <resultMap id="withUser" type="com.example.mybatisplusdemo.model.vo.OrdersVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="user_id" property="userId"/>
+        <association property="user" javaType="com.example.mybatisplusdemo.model.domain.User">
+            <id column="user_id" property="id"/>
+            <result column="login_name" property="loginName"/>
+            <result column="password" property="password"/>
+            <result column="last_login_time" property="lastLoginTime"/>
+            <result column="remark" property="remark"/>
+            <result column="is_deleted" property="deleted"/>
+            <result column="gmt_created" property="gmtCreated"/>
+            <result column="gmt_modified" property="gmtModified"/>
+        </association>
+    </resultMap>
+    <select id="selectVOById" resultType="com.example.mybatisplusdemo.model.vo.OrdersVO" resultMap="withUser">
+        select *, u.id as user_id
+        from orders o
+                 left join user u on o.user_id = u.id
+        where o.id = #{id}
+    </select>
+
+</mapper>
