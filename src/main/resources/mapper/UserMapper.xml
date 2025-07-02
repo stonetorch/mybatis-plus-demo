@@ -40,11 +40,15 @@
     <!-- 自定义分页查询 -->
     <select id="selectUserPage" resultMap="BaseResultMap">
         select * from user
-        where is_deleted = 0
-        <if test="userName != null and userName != ''">
-            and login_name like concat('%', #{userName}, '%')
-        </if>
-        order by id desc
+        <where>
+            is_deleted = 0
+            <if test="user.loginName!= null and user.loginName != ''">
+                and login_name like concat('%', #{user.loginName}, '%')
+            </if>
+            <if test="user.password != null and user.password != ''">
+                and password = #{user.password}
+            </if>
+        </where>
     </select>
 
     <resultMap id="withOrder" type="com.example.mybatisplusdemo.model.vo.UserVO">

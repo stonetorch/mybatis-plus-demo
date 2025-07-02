@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.common.JsonResponse;
 import com.example.mybatisplusdemo.model.domain.Orders;
 import com.example.mybatisplusdemo.model.domain.User;
+import com.example.mybatisplusdemo.model.dto.PageDTO;
 import com.example.mybatisplusdemo.model.dto.UserDTO;
 import com.example.mybatisplusdemo.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,24 @@ public class UserController {
     ) {
         List<User> users = userService.listByKey(key);
         return JsonResponse.success(users);
+    }
+
+    @PostMapping("login")
+    JsonResponse<User> login(@RequestBody User user){
+        User loginUser= userService.login(user);
+        return JsonResponse.success(loginUser);
+    }
+
+    @GetMapping("listPage")
+    JsonResponse<Page<User>> listPage(PageDTO pageDTO,User user){
+        Page<User> res=  userService.listPage(pageDTO, user);
+        return JsonResponse.success(res);
+    }
+
+    @GetMapping("deleteUser")
+    JsonResponse<User> deleteUser(@RequestParam("id") Long id) {
+        User userRemoved=userService.removeUserById(id);
+        return JsonResponse.success(userRemoved);
     }
 
     // 随便添加一点东西

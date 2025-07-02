@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplusdemo.model.domain.Orders;
 import com.example.mybatisplusdemo.model.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.mybatisplusdemo.model.dto.PageDTO;
 
 import java.util.List;
 
@@ -22,4 +23,10 @@ public interface IUserService extends IService<User> {
     Page<Orders> getOrdersByUserIdOrUsername(Page<Orders> page, Long userId, String userName);
 
     List<User> listByKey(String key);
+
+    User login(User user);
+
+    Page<User> listPage(PageDTO pageDTO, User user);
+
+    User removeUserById(Long id);
 }

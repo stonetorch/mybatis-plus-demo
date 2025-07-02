@@ -39,4 +39,6 @@ public interface UserMapper extends BaseMapper<User> {
     void insertUsers(@Param("users") List<User> users);
 
     Page<Orders> selectOrders(@Param("page") Page<Orders> page, @Param("userId") Long userId, @Param("userName") String userName);
+
+    Page<User> selectUserPage(@Param("page") Page<User> page, @Param("user") User user);
 }
